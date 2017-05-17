@@ -10,19 +10,20 @@ class Item {
 class Shop {
   constructor(items = []) {
     this.items = items;
+    this.MAX_QUALITY = 50;
+    this.MIN_QUALITY = 0;
   }
 
   increaseQuality(item, isConjured) {
-    this.incrementQuality(item);
+    let valueToIncrement = 1;
     if (item.owner == 'Wizard'){
-      this.incrementQuality(item)
+      valueToIncrement = valueToIncrement * 2;
     }
+    this.incrementQuality(item, valueToIncrement)
   }
 
-  incrementQuality(item) {
-    if (item.quality < 50) {
-      item.quality = item.quality + 1
-    }
+  incrementQuality(item, valueToIncrement) {
+    item.quality = Math.min(this.MAX_QUALITY, item.quality + valueToIncrement)
   }
 
   decreaseQuality(item, isConjured) {
@@ -37,48 +38,49 @@ class Shop {
   }
 
   decrementQuality(item, valueToDecrement) {
-    if (item.quality >= valueToDecrement) {
-      item.quality = item.quality - valueToDecrement
-    }
+    item.quality = Math.max(this.MIN_QUALITY, item.quality - valueToDecrement)
   }
 
   updateQuality() {
     var pierrePresent = this.isPhilisopherStonePresent(this.items);
 
     for (var i = 0; i < this.items.length; i++) {
-      var isConjured = this.isConjured(this.items[i]);
+      let item = this.items[i];
+
+      var isConjured = this.isConjured(item);
 
       if (!pierrePresent) {
-        if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-          if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-            this.decreaseQuality(this.items[i], isConjured)
+        if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert') {
+          if (item.name != 'Sulfuras, Hand of Ragnaros') {
+            this.decreaseQuality(item, isConjured)
           }
         } else {
-          this.increaseQuality(this.items[i], isConjured)
+          this.increaseQuality(item, isConjured)
 
-          if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].sellIn < 11) {
-              this.increaseQuality(this.items[i], isConjured)
+          if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
+            if (item.sellIn < 11) {
+              this.increaseQuality(item, isConjured)
             }
-            if (this.items[i].sellIn < 6) {
-              this.increaseQuality(this.items[i], isConjured)
+            if (item.sellIn < 6) {
+              this.increaseQuality(item, isConjured)
             }
           }
         }
-        if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-          this.items[i].sellIn = this.items[i].sellIn - 1;
+        if (item.name != 'Sulfuras, Hand of Ragnaros') {
+          item.sellIn = item.sellIn - 1;
         }
-        if (this.items[i].sellIn < 0) {
-          if (this.items[i].name != 'Aged Brie') {
-            if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-              if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                this.decreaseQuality(this.items[i], isConjured)
+
+        if (item.sellIn < 0) {
+          if (item.name != 'Aged Brie') {
+            if (item.name != 'Backstage passes to a TAFKAL80ETC concert') {
+              if (item.name != 'Sulfuras, Hand of Ragnaros') {
+                this.decreaseQuality(item, isConjured)
               }
             } else {
-              this.items[i].quality = this.items[i].quality - this.items[i].quality
+              item.quality = item.quality - item.quality
             }
           } else {
-            this.increaseQuality(this.items[i], isConjured)
+            this.increaseQuality(item, isConjured)
           }
         }
       }
