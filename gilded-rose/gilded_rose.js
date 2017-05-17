@@ -43,24 +43,16 @@ class Shop {
   }
 
   updateQuality() {
-    var pierrePresent = false;
+    var pierrePresent = this.isPhilisopherStonePresent(this.items);
 
-
-    for (var i = 0; i < this.items.length; i++) {
-      if (this.items[i].name == "Philosopher's stone") {
-        pierrePresent = true;
-      }
-    }
     for (var i = 0; i < this.items.length; i++) {
       var isConjured = this.items[i].name.includes("Conjured");
 
-      if (pierrePresent) {
-
-      } else {
+      if (!pierrePresent) {
         if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-              this.decreaseQuality(this.items[i], isConjured)
-            }
+          if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
+            this.decreaseQuality(this.items[i], isConjured)
+          }
         } else {
           this.increaseQuality(this.items[i], isConjured)
 
@@ -79,9 +71,9 @@ class Shop {
         if (this.items[i].sellIn < 0) {
           if (this.items[i].name != 'Aged Brie') {
             if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-                if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                  this.decreaseQuality(this.items[i], isConjured)
-                }
+              if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
+                this.decreaseQuality(this.items[i], isConjured)
+              }
             } else {
               this.items[i].quality = this.items[i].quality - this.items[i].quality
             }
@@ -93,6 +85,16 @@ class Shop {
     }
 
     return this.items;
+  }
+
+  isPhilisopherStonePresent(items) {
+    let stonePresent = false
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].name == "Philosopher's stone") {
+        stonePresent = true;
+      }
+    }
+    return stonePresent;
   }
 }
 

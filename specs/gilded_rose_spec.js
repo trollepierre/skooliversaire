@@ -162,4 +162,6 @@ describe('gilded_rose_specs', function () {
     expect(itemShop[0].quality).toEqual(24)
     expect(itemShop[0].sellIn).toEqual(-1)
   });
+
+
 })
