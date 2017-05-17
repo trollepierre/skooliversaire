@@ -125,6 +125,25 @@ describe('gilded_rose_specs', function () {
     expect(itemShop[0].sellIn).toEqual(-1)
   });
 
+  it('should decrease fourth when owner item is Barbarian and item is Conjured', function () {
+    let items = [{
+      name: "Conjured TOTO",
+      sellIn: 0,
+      quality: 20,
+      owner: 'Barbarian'
+    }
+    ]
+    var shop = new gilded_rose(items)
+    var itemShop = shop.items;
+
+    // When
+    shop.updateQuality()
+
+    // Then
+    expect(itemShop[0].quality).toEqual(12)
+    expect(itemShop[0].sellIn).toEqual(-1)
+  });
+
   it('should increase twice when owner item is Wizard', function () {
     let items = [{
       name: "Aged Brie",

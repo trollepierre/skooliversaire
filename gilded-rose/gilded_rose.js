@@ -26,23 +26,19 @@ class Shop {
   }
 
   decreaseQuality(item, isConjured) {
-    if (item.quality > 0) {
-      if (isConjured) {
-        item.quality = item.quality - 1
-      }
-      if (item.quality > 0) {
-        item.quality = item.quality - 1
-      }
-    }
+    let valueToDecrement = 1
     if (item.owner == 'Barbarian'){
-      if (item.quality > 0) {
-        if (isConjured) {
-          item.quality = item.quality - 1
-        }
-        if (item.quality > 0) {
-          item.quality = item.quality - 1
-        }
-      }
+      valueToDecrement = valueToDecrement * 2
+    }
+    if (isConjured) {
+      valueToDecrement = valueToDecrement * 2
+    }
+    this.decrementQuality(item, valueToDecrement);
+  }
+
+  decrementQuality(item, valueToDecrement) {
+    if (item.quality >= valueToDecrement) {
+      item.quality = item.quality - valueToDecrement
     }
   }
 
