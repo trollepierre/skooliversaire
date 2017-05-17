@@ -46,7 +46,7 @@ class Shop {
     var pierrePresent = this.isPhilisopherStonePresent(this.items);
 
     for (var i = 0; i < this.items.length; i++) {
-      var isConjured = this.items[i].name.includes("Conjured");
+      var isConjured = this.isConjured(this.items[i]);
 
       if (!pierrePresent) {
         if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
@@ -85,6 +85,10 @@ class Shop {
     }
 
     return this.items;
+  }
+
+  isConjured(item) {
+    return item.name.includes("Conjured");
   }
 
   isPhilisopherStonePresent(items) {
