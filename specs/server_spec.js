@@ -18,7 +18,7 @@ describe('Default server', function () {
       expect(response.statusCode).toBe(200);
       done();
     });
-    feedback.write('{"type": "INFO", "content": "this is my precious feedback"}');
+    feedback.write('{"type": "INFO", "content": "this is my precious feedback, dear Guilded Rose"}');
   });
 
   it('should handle order', function(done) {
